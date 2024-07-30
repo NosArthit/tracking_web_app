@@ -1,9 +1,6 @@
-
-
-//register page
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:my_web_app/api_service.dart';
-
+import 'package:my_web_app/service/userapi_service.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -11,7 +8,9 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  final ApiService _apiService = ApiService();
+  final UserApiService _apiService = UserApiService();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   final TextEditingController _firstnameController = TextEditingController();
   final TextEditingController _lastnameController = TextEditingController();
   final TextEditingController _companyController = TextEditingController();
@@ -23,46 +22,46 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  bool _isLoading = false;
 
   void _register() async {
-    if (!_formKey.currentState!.validate()) return;
+    if (_formKey.currentState!.validate()) {
+      final userData = {
+        'firstname': _firstnameController.text,
+        'lastname': _lastnameController.text,
+        'company': _companyController.text,
+        'address': _addressController.text,
+        'city': _cityController.text,
+        'state': _stateController.text,
+        'country': _countryController.text,
+        'postal_code': _postalCodeController.text,
+        'phone': _phoneController.text,
+        'email': _emailController.text,
+        'password': _passwordController.text,
+      };
 
-    setState(() {
-      _isLoading = true;
-    });
+      final responseMessage = await _apiService.register(userData);
 
-    final response = await _apiService.register({
-      'firstname': _firstnameController.text,
-      'lastname': _lastnameController.text,
-      'company': _companyController.text,
-      'address': _addressController.text,
-      'city': _cityController.text,
-      'state': _stateController.text,
-      'country': _countryController.text,
-      'postal_code': _postalCodeController.text,
-      'phone': _phoneController.text,
-      'email': _emailController.text,
-      'password': _passwordController.text,
-    });
-
-    setState(() {
-      _isLoading = false;
-    });
-
-    if (response.statusCode == 201) {
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        '/login',
-        (Route<dynamic> route) => false,
-      );
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Registration successful')),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Registration failed')),
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(responseMessage == 'User registered successfully'
+                ? 'Registration Successful'
+                : 'Registration Failed'),
+            content: Text(responseMessage!),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  if (responseMessage == 'User registered successfully') {
+                    Navigator.pushReplacementNamed(context, '/login');
+                  }
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
       );
     }
   }
@@ -70,15 +69,18 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Register')),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
+      appBar: AppBar(
+        backgroundColor: Colors.grey[200],
+        title: const Text('Register'),
+      ),
+      backgroundColor: Colors.grey[200],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
+              children: <Widget>[
                 TextFormField(
                   controller: _firstnameController,
                   decoration: InputDecoration(labelText: 'Firstname'),
@@ -122,12 +124,19 @@ class _RegisterPageState extends State<RegisterPage> {
                 TextFormField(
                   controller: _phoneController,
                   decoration: InputDecoration(labelText: 'Phone'),
-                  validator: (value) => value!.isEmpty ? 'Enter your phone number' : null,
+                  validator: (value) => value!.isEmpty ? 'Enter your phone' : null,
                 ),
                 TextFormField(
                   controller: _emailController,
                   decoration: InputDecoration(labelText: 'Email'),
-                  validator: (value) => value!.isEmpty ? 'Enter your email' : null,
+                  validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Enter your email';
+                      } else if (!EmailValidator.validate(value)) {
+                        return 'Email pattern invalid';
+                      }
+                      return null;
+                    },
                 ),
                 TextFormField(
                   controller: _passwordController,
@@ -136,12 +145,21 @@ class _RegisterPageState extends State<RegisterPage> {
                   validator: (value) => value!.isEmpty ? 'Enter your password' : null,
                 ),
                 SizedBox(height: 20),
-                _isLoading
-                    ? CircularProgressIndicator()
-                    : ElevatedButton(
-                        onPressed: _register,
-                        child: Text('Register'),
-                      ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: ElevatedButton(
+                    
+                    onPressed: _register,
+                    child: Text('Register', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+                  ),
+                ),
+                SizedBox(height: 20),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/login');
+                  },
+                  child: Text('Already have an account? Login', style: TextStyle(color: Colors.blue[600],)),
+                ),
               ],
             ),
           ),
@@ -150,6 +168,7 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 }
+
 
 
 

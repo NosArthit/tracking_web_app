@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  flutterapp:
+    build:
+      context: /Users/arthitkhongsukhee/tracking_web_app
+      dockerfile: Dockerfile
+      platform: linux/arm64
+    ports:
+      - "8080:80"
+    depends_on:
+      - server_service
+
+  server_service:
+    image: nginx:alpine
+    ports:
+      - "3000:3000"
+    container_name: server_service_container
+    platform: linux/arm64
+
+
+
+
