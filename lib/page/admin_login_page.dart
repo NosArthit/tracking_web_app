@@ -20,7 +20,8 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
   void _login() async {
     if (_formKey.currentState!.validate()) {
       try {
-        final token = await _apiService.login(_emailController.text, _passwordController.text, _adminIdController.text);
+        final token = await _apiService.login(_emailController.text,
+            _passwordController.text, _adminIdController.text);
 
         if (token != null) {
           final prefs = await SharedPreferences.getInstance();
@@ -64,7 +65,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.deepPurple[50],
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
@@ -74,9 +75,13 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(
+                  SizedBox(
+                    height: 80,
+                  ),
+                  Icon(
                     Icons.person_off,
                     size: 100,
+                    color: Colors.deepPurple[900],
                   ),
                   const SizedBox(height: 15),
                   Text(
@@ -91,50 +96,135 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                     padding: const EdgeInsets.symmetric(horizontal: 100),
                     child: Column(
                       children: <Widget>[
-                        TextFormField(
-                          controller: _emailController,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(), labelText: 'Email'),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Enter your email';
-                            } else if (!EmailValidator.validate(value)) {
-                              return 'Email pattern invalid';
-                            }
-                            return null;
-                          },
+                        SizedBox(
+                          width: 500,
+                          child: TextFormField(
+                            controller: _emailController,
+                            decoration: InputDecoration(
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.deepPurple),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.deepPurple,
+                                ),
+                              ),
+                              prefixIcon: Icon(
+                                Icons.person,
+                                color: Colors.deepPurple[900],
+                              ),
+                              filled: true,
+                              fillColor: Colors.deepPurple[50],
+                              labelText: "Email",
+                              labelStyle: TextStyle(color: Colors.deepPurple[900]),
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Enter your email';
+                              } else if (!EmailValidator.validate(value)) {
+                                return 'Email pattern invalid';
+                              }
+                              return null;
+                            },
+                          ),
                         ),
                         const SizedBox(height: 20),
-                        TextFormField(
-                          controller: _passwordController,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(), labelText: 'Password'),
-                          obscureText: true,
-                          validator: (value) =>
-                              value!.isEmpty ? 'Enter your password' : null,
+                        SizedBox(
+                          width: 500,
+                          child: TextFormField(
+                            controller: _passwordController,
+                            decoration: InputDecoration(
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.deepPurple),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.deepPurple,
+                                ),
+                              ),
+                              prefixIcon: Icon(
+                                Icons.key,
+                                color: Colors.deepPurple[900],
+                              ),
+                              filled: true,
+                              fillColor: Colors.deepPurple[50],
+                              labelText: "Password",
+                              labelStyle: TextStyle(color: Colors.deepPurple[900]),
+                            ),
+                            obscureText: true,
+                            validator: (value) =>
+                                value!.isEmpty ? 'Enter your password' : null,
+                          ),
                         ),
                         const SizedBox(height: 20),
-                        TextFormField(
-                          controller: _adminIdController,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(), labelText: 'Admin ID'),
-                          validator: (value) =>
-                              value!.isEmpty ? 'Enter your Admin ID' : null,
+                        SizedBox(
+                          width: 500,
+                          child: TextFormField(
+                            controller: _adminIdController,
+                            decoration: InputDecoration(
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.deepPurple),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.deepPurple,
+                                ),
+                              ),
+                              prefixIcon: Icon(
+                                Icons.key,
+                                color: Colors.deepPurple[900],
+                              ),
+                              filled: true,
+                              fillColor: Colors.deepPurple[50],
+                              labelText: "Admin ID",
+                              labelStyle: TextStyle(color: Colors.deepPurple[900]),
+                            ),
+                            obscureText: true,
+                            validator: (value) =>
+                                value!.isEmpty ? 'Enter your Admin ID' : null,
+                          ),
                         ),
                       ],
                     ),
                   ),
                   SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: _login,
-                    child: Text('Login'),
+                  SizedBox(
+                    width: 400,
+                    height: 50,
+                    child: ElevatedButton(
+                      onPressed: _login,
+                      child: Text(
+                        'Login',
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.bold),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor:
+                            Colors.deepPurple[900], // foreground (text) color
+                        backgroundColor: Colors.white,
+                      ),
+                    ),
                   ),
                   SizedBox(height: 10),
                   TextButton(
                     onPressed: () {
                       Navigator.pushNamed(context, '/admin_register');
                     },
-                    child: Text('Don\'t have an admin account? Register',
+                    child: Text(
+                      'Don\'t have an admin account? Register',
+                      style: TextStyle(color: Colors.blue[600]),
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/');
+                    },
+                    child: Text(
+                      'Log In in user mode',
                       style: TextStyle(color: Colors.blue[600]),
                     ),
                   ),
@@ -148,4 +238,3 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
     );
   }
 }
-

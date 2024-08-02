@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:my_web_app/components/userDataContainer.dart';
+import 'package:my_web_app/components/user_page_container.dart';
 import 'dart:convert';
 import 'dart:async';
 import 'package:my_web_app/page/data_utils.dart';
@@ -258,6 +258,7 @@ class _HomePageState extends State<HomePage> {
             fontSize: 24,
             fontWeight: FontWeight.bold,
           ),
+          
         ),
       ),
       backgroundColor: Colors.grey[200],
@@ -353,6 +354,13 @@ class _HomePageState extends State<HomePage> {
                     width: 2,
                   ),
                   borderRadius: BorderRadius.circular(8),
+                  boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey,
+                                blurRadius: 100.0,
+                                offset: Offset(8, 8),
+                              ),
+                            ],
                 ),
                 height: 500,
                 child: GoogleMap(
@@ -399,149 +407,230 @@ class _HomePageState extends State<HomePage> {
         Row(
           children: <Widget>[
             Expanded(
-              child: Card(
-                color: Colors.deepPurple[50],
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      TextField(
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            hintText: 'Enter IMEI',
-                            hintStyle: TextStyle(color: Colors.grey[400])),
-                        onChanged: (value) {
-                          imei = value;
-                        },
-                      ),
-                      SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            drawPolylineFromDataTableClicked =
-                                false; // Reset the flag
-                          });
-                          clearPolylines();
-                          startFetchingLatestData();
-                        },
-                        child: const Text(
-                          'Fetch Latest Data',
-                          style: TextStyle(
-                              color: Colors.black, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: latestData != null
-                            ? () {
-                                if (drawPolylineFromDataTableClicked == true) {
-                                  clearPolylines();
-                                  _goToTheCar();
-                                } else {
-                                  _goToTheCar();
-                                }
-                              }
-                            : null,
-                        child: Text("Go to Current Location",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold)),
-                      ),
-                      SizedBox(height: 20),
-                      Row(
-                        children: [
-                          Text("Track Current Location",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold)),
-                          Switch(
-                            value: trackLocation,
-                            onChanged: latestData != null
-                                ? (isChecked) {
-                                    setState(() {
-                                      trackLocation = isChecked;
-                                    });
-                                    if (isChecked) {
-                                      if (drawPolylineFromDataTableClicked ==
-                                          true) {
+              child: Container(
+                decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: Offset(0, 3),
+              ),
+            ],
+          ),
+                child: Card(
+                
+                              
+                  color: Colors.deepPurple[50],
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Card(
+                      color: Colors.white,
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            TextField(
+                              decoration: InputDecoration(
+                                suffixIcon: Icon(Icons.car_rental_outlined, color: Colors.deepPurple[700],),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    borderSide: BorderSide(color: Colors.deepPurple, width: 8),
+                                  ),
+                                  hintText: 'Enter IMEI',
+                                  hintStyle: TextStyle(color: Colors.deepPurple[100],)),
+                                  
+                              onChanged: (value) {
+                                imei = value;
+                              },
+                            ),
+                            SizedBox(height: 20),
+                            ElevatedButton(
+                              onPressed: () {
+                                setState(() {
+                                  drawPolylineFromDataTableClicked =
+                                      false; // Reset the flag
+                                });
+                                clearPolylines();
+                                startFetchingLatestData();
+                              },
+                              child: Text(
+                                'Track Car',
+                                style: TextStyle(
+                                    color: Colors.deepPurple[900], fontWeight: FontWeight.bold),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                        foregroundColor: Colors.deepPurple[900],
+                                        backgroundColor: Colors.white,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(10),
+                                        ),
+                              ),
+                            ),
+                            SizedBox(height: 20),
+                            ElevatedButton(
+                              onPressed: latestData != null
+                                  ? () {
+                                      if (drawPolylineFromDataTableClicked == true) {
                                         clearPolylines();
                                         _goToTheCar();
                                       } else {
                                         _goToTheCar();
                                       }
                                     }
-                                  }
-                                : null,
-                          ),
-                        ],
+                                  : null,
+                              child: Text("Current Location",
+                                  style: TextStyle(
+                                      color: Colors.deepPurple[900],
+                                      fontWeight: FontWeight.bold)),
+                                      style: ElevatedButton.styleFrom(
+                                        foregroundColor: Colors.deepPurple[900],
+                                        backgroundColor: Colors.white,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(10),
+                                        ),
+                                      ),
+                            ),
+                            SizedBox(height: 20),
+                            Row(
+                              children: [
+                                Text("Real-Time Location",
+                                    style: TextStyle(
+                                        color: Colors.deepPurple[900],
+                                        fontWeight: FontWeight.bold)),
+                                Switch(
+                                  value: trackLocation,
+                                  onChanged: latestData != null
+                                      ? (isChecked) {
+                                          setState(() {
+                                            trackLocation = isChecked;
+                                          });
+                                          if (isChecked) {
+                                            if (drawPolylineFromDataTableClicked ==
+                                                true) {
+                                              clearPolylines();
+                                              _goToTheCar();
+                                            } else {
+                                              _goToTheCar();
+                                            }
+                                          }
+                                        }
+                                      : null,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ],
+                    ),
                   ),
                 ),
               ),
             ),
             SizedBox(width: 10),
             Expanded(
-              child: Card(
-                color: Colors.deepPurple[50],
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      TextField(
-                        decoration: InputDecoration(
-                            border: const OutlineInputBorder(),
-                            hintText: 'Start Date (yyyy-MM-dd)',
-                            hintStyle: TextStyle(color: Colors.grey[400])),
-                        onChanged: (value) {
-                          startDate = value;
-                        },
+              child: Container(
+                decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: Offset(0, 3),
+              ),
+            ],
+          ),
+                child: Card(
+                  color: Colors.deepPurple[50],
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Card(
+                      color: Colors.white,
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            TextField(
+                              decoration: InputDecoration(
+                                suffixIcon: Icon(Icons.calendar_today, color: Colors.deepPurple[700],),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    borderSide: BorderSide(color: Colors.deepPurple, width: 8),
+                                  ),
+                                  hintText: 'Start Date (yyyy-MM-dd)',
+                                  hintStyle: TextStyle(color: Colors.deepPurple[100],)),
+                              onChanged: (value) {
+                                startDate = value;
+                              },
+                            ),
+                            const SizedBox(height: 20),
+                            TextField(
+                              decoration: InputDecoration(
+                                suffixIcon: Icon(Icons.calendar_today, color: Colors.deepPurple[700]),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    borderSide: BorderSide(color: Colors.deepPurple, width: 8),
+                                  ),
+                                  hintText: 'End Date (yyyy-MM-dd)',
+                                  hintStyle: TextStyle(color: Colors.deepPurple[100],)),
+                              onChanged: (value) {
+                                endDate = value;
+                              },
+                            ),
+                            const SizedBox(height: 20),
+                            ElevatedButton(
+                              onPressed: () {
+                                if (drawPolylineFromDataTableClicked == true) {
+                                  clearPolylines();
+                                  fetchDataByDateRange();
+                                  drawPolylineFromDataTableClicked =
+                                      false; // Reset the flag
+                                } else {
+                                  fetchDataByDateRange();
+                                }
+                              },
+                              child: Text('Search by Date Range',
+                                  style: TextStyle(
+                                      color: Colors.deepPurple[900],
+                                      fontWeight: FontWeight.bold)),
+                                    style: ElevatedButton.styleFrom(
+                                        foregroundColor: Colors.deepPurple[900],
+                                        backgroundColor: Colors.white,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(10),
+                                        ),
+                                    ),  
+                            ),
+                            SizedBox(height: 20),
+                            ElevatedButton(
+                              onPressed: dateRangeData.isNotEmpty
+                                  ? () {
+                                      drawPolylineFromDataTableClicked =
+                                          true; // Set the flag
+                                      clearPolylines();
+                                      drawPolylineFromDataTable();
+                                    }
+                                  : null,
+                              child: Text('Draw History Route',
+                                  style: TextStyle(
+                                      color: Colors.deepPurple[900],
+                                      fontWeight: FontWeight.bold)),
+                                      style: ElevatedButton.styleFrom(
+                                        foregroundColor: Colors.deepPurple[900],
+                                        backgroundColor: Colors.white,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(10),
+                                        ),
+                                      ),
+                            ),
+                          ],
+                        ),
                       ),
-                      const SizedBox(height: 20),
-                      TextField(
-                        decoration: InputDecoration(
-                            border: const OutlineInputBorder(),
-                            hintText: 'End Date (yyyy-MM-dd)',
-                            hintStyle: TextStyle(color: Colors.grey[400])),
-                        onChanged: (value) {
-                          endDate = value;
-                        },
-                      ),
-                      const SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: () {
-                          if (drawPolylineFromDataTableClicked == true) {
-                            clearPolylines();
-                            fetchDataByDateRange();
-                            drawPolylineFromDataTableClicked =
-                                false; // Reset the flag
-                          } else {
-                            fetchDataByDateRange();
-                          }
-                        },
-                        child: Text('Fetch Data by Date Range',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold)),
-                      ),
-                      SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: dateRangeData.isNotEmpty
-                            ? () {
-                                drawPolylineFromDataTableClicked =
-                                    true; // Set the flag
-                                clearPolylines();
-                                drawPolylineFromDataTable();
-                              }
-                            : null,
-                        child: Text('Draw Route',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold)),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               ),
@@ -549,50 +638,71 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         SizedBox(height: 20),
-        Card(
-          color: Colors.deepPurple[50],
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  'GPS Tracking History by Date',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: Offset(0, 3),
+              ),
+            ],
+          ),
+          child: Card(
+            color: Colors.deepPurple[50],
+            child: Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Card(
+                color: Colors.white,
+                
+                child: Padding(
+                  padding: const EdgeInsets.all(25.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        'GPS Tracking History by Date',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.deepPurple[700]
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      dateRangeData.isNotEmpty
+                          ? SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: DataTable(
+                                columnSpacing: 10,
+                                columns: dateRangeData.first.keys.map((key) {
+                                  return DataColumn(
+                                    label: Text(key),
+                                    numeric:
+                                        false, // Change to true if the column should be numeric
+                                  );
+                                }).toList(),
+                                rows: dateRangeData.map((entry) {
+                                  return DataRow(
+                                    cells: entry.values.map((value) {
+                                      return DataCell(
+                                        Text(value.toString()),
+                                        // Add more properties here if needed
+                                      );
+                                    }).toList(),
+                                  );
+                                }).toList(),
+                              ),
+                            )
+                          : Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                  'No data available for the specified date range', style: TextStyle(color:Colors.deepPurple[900],),)),
+                    ],
                   ),
                 ),
-                SizedBox(height: 10),
-                dateRangeData.isNotEmpty
-                    ? SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: DataTable(
-                          columnSpacing: 10,
-                          columns: dateRangeData.first.keys.map((key) {
-                            return DataColumn(
-                              label: Text(key),
-                              numeric:
-                                  false, // Change to true if the column should be numeric
-                            );
-                          }).toList(),
-                          rows: dateRangeData.map((entry) {
-                            return DataRow(
-                              cells: entry.values.map((value) {
-                                return DataCell(
-                                  Text(value.toString()),
-                                  // Add more properties here if needed
-                                );
-                              }).toList(),
-                            );
-                          }).toList(),
-                        ),
-                      )
-                    : Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                            'No data available for the specified date range')),
-              ],
+              ),
             ),
           ),
         ),

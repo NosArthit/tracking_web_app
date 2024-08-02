@@ -1,11 +1,10 @@
 //admin_home_page
 import 'package:flutter/material.dart';
-import 'package:my_web_app/components/custom_status.dart';
+import 'package:my_web_app/components/admin_page_container.dart';
+import 'package:my_web_app/components/check_box.dart';
 import 'package:my_web_app/components/custom_textfield_admin.dart';
-import 'package:my_web_app/components/custom_textfield_admin_approval.dart';
 import 'package:my_web_app/components/custom_textfield_input.dart';
 import 'package:my_web_app/components/custom_textfield_output.dart';
-import 'package:my_web_app/components/custom_textfield_user.dart';
 import 'package:my_web_app/components/text_editing_controller.dart';
 import 'package:my_web_app/page/user_details_page.dart';
 import 'package:my_web_app/service/adminapi_service.dart';
@@ -98,7 +97,8 @@ class _AdminHomePageState extends State<AdminHomePage> {
       });
       _navigateToUserAdminDetailsPage();
     } catch (e) {
-      print('Error: $e');
+      //print('Error: $e');
+      return;
     }
   }
 
@@ -128,7 +128,8 @@ class _AdminHomePageState extends State<AdminHomePage> {
       });
       _navigateToUserAdminDetailsPage();
     } catch (e) {
-      print('Error: $e');
+      //print('Error: $e');
+      return;
     }
   }
 
@@ -212,9 +213,11 @@ class _AdminHomePageState extends State<AdminHomePage> {
         token: _token,
       );
 
-      print('User data updated successfully');
+      //print('User data updated successfully');
+      return;
     } catch (e) {
-      print('Failed to update user data: $e');
+      //print('Failed to update user data: $e');
+      return;
     }
   }
 
@@ -236,9 +239,11 @@ class _AdminHomePageState extends State<AdminHomePage> {
         token: _token,
       );
 
-      print('User status updated successfully');
+      //print('User status updated successfully');
+      return;
     } catch (e) {
-      print('Failed to update user status: $e');
+      //print('Failed to update user status: $e');
+      return;
     }
   }
 
@@ -255,9 +260,11 @@ class _AdminHomePageState extends State<AdminHomePage> {
         token: _token,
       );
 
-      print('User status updated successfully');
+      //print('User status updated successfully');
+      return;
     } catch (e) {
-      print('Failed to update user status: $e');
+      //print('Failed to update user status: $e');
+      return;
     }
   }
 
@@ -278,9 +285,11 @@ class _AdminHomePageState extends State<AdminHomePage> {
         token: _token,
       );
 
-      print('User deleted successfully');
+      //print('User deleted successfully');
+      return;
     } catch (e) {
-      print('Failed to delete user account: $e');
+      //print('Failed to delete user account: $e');
+      return;
     }
   }
 
@@ -301,9 +310,11 @@ class _AdminHomePageState extends State<AdminHomePage> {
         token: _token,
       );
 
-      print('User deleted successfully');
+      //print('User deleted successfully');
+      return;
     } catch (e) {
-      print('Failed to delete user account: $e');
+      //print('Failed to delete user account: $e');
+      return;
     }
   }
 
@@ -370,7 +381,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
         },
         child: Scaffold(
           appBar: AppBar(
-            title: Text('Admin Home Page'),
+            title: Text('Admin Mode Management'),
             actions: [
               IconButton(
                 icon: Icon(Icons.logout),
@@ -378,448 +389,514 @@ class _AdminHomePageState extends State<AdminHomePage> {
               ),
             ],
           ),
-          body: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(25),
-                    color: Colors.black,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Text(
-                              'Logged in as: $_email',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Text(
-                              'Admin ID: $_adminId',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: <Widget>[
-                            Text(
-                              'Token Remaining Time: ${formatRemainingTime(_remainingTime)}',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                          ],
-                        ),
-                        //Text('Token expires in: $_remainingTime seconds'),
-                      ],
-                    ),
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Card(
-                        child: Column(
-                          children: <Widget>[
-                            Text("Insert Your Data one or more to search"),
-                            SizedBox(
-                              height: 16,
-                            ),
-                            CustomTextFieldInput(
-                              controller: _controllers.dateController,
-                              hintText: "Register Date",
-                              icon: Icons.calendar_month,
-                            ),
-                            SizedBox(height: 10.0),
-                            CustomTextFieldInput(
-                              controller: _controllers.timeController,
-                              hintText: "Register Time",
-                              icon: Icons.watch_later_outlined,
-                            ),
-                            SizedBox(height: 10.0),
-                            CustomTextFieldInput(
-                              controller: _controllers.userIdController,
-                              hintText: "User ID",
-                              icon: Icons.person,
-                            ),
-                            SizedBox(height: 10.0),
-                            CustomTextFieldInput(
-                              controller: _controllers.firstnameController,
-                              hintText: "First Name",
-                              icon: Icons.person,
-                            ),
-                            SizedBox(height: 10.0),
-                            CustomTextFieldInput(
-                              controller: _controllers.lastnameController,
-                              hintText: "Last Name",
-                              icon: Icons.person,
-                            ),
-                            SizedBox(height: 10.0),
-                            CustomTextFieldInput(
-                              controller: _controllers.companyController,
-                              hintText: "Company",
-                              icon: Icons.maps_home_work_outlined,
-                            ),
-                            SizedBox(height: 10.0),
-                            CustomTextFieldInput(
-                              controller: _controllers.addressController,
-                              hintText: "Address",
-                              icon: Icons.home,
-                            ),
-                            SizedBox(height: 10.0),
-                            CustomTextFieldInput(
-                              controller: _controllers.cityController,
-                              hintText: "City",
-                              icon: Icons.maps_home_work_outlined,
-                            ),
-                            SizedBox(height: 10.0),
-                            CustomTextFieldInput(
-                              controller: _controllers.stateController,
-                              hintText: "State",
-                              icon: Icons.maps_home_work_outlined,
-                            ),
-                            SizedBox(height: 10.0),
-                            CustomTextFieldInput(
-                              controller: _controllers.countryController,
-                              hintText: "Country",
-                              icon: Icons.maps_home_work_outlined,
-                            ),
-                            SizedBox(height: 10.0),
-                            CustomTextFieldInput(
-                              controller: _controllers.postalCodeController,
-                              hintText: "Postal Code",
-                              icon: Icons.numbers,
-                            ),
-                            SizedBox(height: 10.0),
-                            CustomTextFieldInput(
-                              controller: _controllers.phoneController,
-                              hintText: "Phone",
-                              icon: Icons.phone,
-                            ),
-                            SizedBox(height: 10.0),
-                            CustomTextFieldInput(
-                              controller: _controllers.emailController,
-                              hintText: "Email",
-                              icon: Icons.email,
-                            ),
-                            SizedBox(height: 10.0),
-                            CustomTextFieldInput(
-                              controller: _controllers.dateInfoUpdateController,
-                              hintText: "The Lastest Update",
-                              icon: Icons.calendar_month,
-                            ),
-                            SizedBox(height: 10.0),
-                            CustomTextFieldInput(
-                              controller: _controllers.timeInfoUpdateController,
-                              hintText: "The Lastest Update",
-                              icon: Icons.watch_later_outlined,
-                            ),
-                            SizedBox(height: 22.0),
-                            StatusRow(
-                              status: _status,
-                              onChanged: (bool? newValue) {
-                                setState(() {
-                                  _status = newValue != null && newValue
-                                      ? 'true'
-                                      : 'false';
-                                });
-                              },
-                            ),
-                            SizedBox(height: 25.0),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                ElevatedButton(
-                                  onPressed: _fetchUserData,
-                                  child: Text('Fetch User Data'),
-                                ),
-                                SizedBox(width: 16.0),
-                                ElevatedButton(
-                                  onPressed: _fetchAdminData,
-                                  child: Text('Fetch Admin Data'),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 25,
-                            )
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        width: 30,
-                      ),
-                      Card(
-                        child: Column(
-                          children: <Widget>[
-                            Text("Edit data in Box below"),
-                            SizedBox(height: 16.0),
-                            CustomTextFieldOutput(
-                              controller: _controllers.dateController2,
-                              enable: false,
-                              hintText: "Date",
-                              icon: Icons.calendar_month_sharp,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            CustomTextFieldOutput(
-                              controller: _controllers.timeController2,
-                              enable: false,
-                              hintText: "Time",
-                              icon: Icons.watch_later_outlined,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            CustomTextFieldOutput(
-                              controller: _controllers.userIdController2,
-                              enable: false,
-                              hintText: "User ID",
-                              icon: Icons.person,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            CustomTextFieldOutput(
-                              controller: _controllers.firstnameController2,
-                              enable: true,
-                              hintText: "First Name",
-                              icon: Icons.person,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            CustomTextFieldOutput(
-                              controller: _controllers.lastnameController2,
-                              enable: true,
-                              hintText: "Last Name",
-                              icon: Icons.person,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            CustomTextFieldOutput(
-                              controller: _controllers.companyController2,
-                              enable: true,
-                              hintText: "Company",
-                              icon: Icons.maps_home_work_outlined,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            CustomTextFieldOutput(
-                              controller: _controllers.addressController2,
-                              enable: true,
-                              hintText: "Address",
-                              icon: Icons.maps_home_work_outlined,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            CustomTextFieldOutput(
-                              controller: _controllers.cityController2,
-                              enable: true,
-                              hintText: "City",
-                              icon: Icons.maps_home_work_outlined,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            CustomTextFieldOutput(
-                              controller: _controllers.stateController2,
-                              enable: true,
-                              hintText: "State",
-                              icon: Icons.maps_home_work_outlined,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            CustomTextFieldOutput(
-                              controller: _controllers.countryController2,
-                              enable: true,
-                              hintText: "Country",
-                              icon: Icons.maps_home_work_outlined,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            CustomTextFieldOutput(
-                              controller: _controllers.postalCodeController2,
-                              enable: true,
-                              hintText: "Postal Code",
-                              icon: Icons.numbers,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            CustomTextFieldOutput(
-                              controller: _controllers.phoneController2,
-                              enable: true,
-                              hintText: "Phone",
-                              icon: Icons.phone,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            CustomTextFieldOutput(
-                              controller: _controllers.emailController2,
-                              enable: true,
-                              hintText: "Email",
-                              icon: Icons.email,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            CustomTextFieldOutput(
-                              controller: _controllers.statusController2,
-                              enable: false,
-                              hintText: "Status",
-                              icon: Icons.check_rounded,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            CustomTextFieldOutput(
-                              controller:
-                                  _controllers.dateInfoUpdateController2,
-                              enable: false,
-                              hintText: "Latest Date Info Update",
-                              icon: Icons.calendar_month,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            CustomTextFieldOutput(
-                              controller:
-                                  _controllers.timeInfoUpdateController2,
-                              enable: false,
-                              hintText: "Latest Time Info Update",
-                              icon: Icons.watch_later_outlined,
-                            ),
-                            SizedBox(
-                              height: 16,
-                            ),
-                            Row(
-                              children: <Widget>[
-                                ElevatedButton(
-                                    onPressed: _updateUser,
-                                    child: Text("Update User Account")),
-                                SizedBox(
-                                  width: 16.0,
-                                ),
-                                ElevatedButton(
-                                    onPressed: _deleteUser,
-                                    child: Text("Delete User Account")),
-                              ],
-                            ),
-                            SizedBox(height: 25.0),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 25.0),
-                  CustomTextFieldAdmin(
-                    controller: _controllers.adminIdController5,
-                    enable: false,
-                    hintText: "Admin ID",
-                    icon: Icons.person,
-                  ),
-                  CustomTextFieldAdmin(
-                    controller: _controllers.userIdController5,
-                    enable: false,
-                    hintText: "User ID",
-                    icon: Icons.person,
-                  ),
-                  CustomTextFieldAdmin(
-                    controller: _controllers.emailController5,
-                    enable: false,
-                    hintText: "Admin Email",
-                    icon: Icons.email,
-                  ),
-                  CustomTextFieldAdmin(
-                    controller: _controllers.statusController5,
-                    enable: false,
-                    hintText: "Admin Status",
-                    icon: Icons.check_rounded,
-                  ),
-                  CustomTextFieldAdmin(
-                    controller: _controllers.registerDateController5,
-                    enable: false,
-                    hintText: "Admin Registered Date",
-                    icon: Icons.calendar_month,
-                  ),
-                  CustomTextFieldAdmin(
-                    controller: _controllers.registerTimeController5,
-                    enable: false,
-                    hintText: "Admin Registered Time",
-                    icon: Icons.watch_later_outlined,
-                  ),
-                  CustomTextFieldAdmin(
-                    controller: _controllers.referenceEmailController5,
-                    enable: false,
-                    hintText: "Reference Email Approval",
-                    icon: Icons.email,
-                  ),
-                  SizedBox(height: 25.0),
-                  SizedBox(height: 25.0),
-                  ElevatedButton(
-                      onPressed: _deleteAdmin,
-                      child: Text("Delete Admin Account")),
-                  SizedBox(height: 25.0),
-                  CustomTextFieldUser(
-                    controller: _controllers.userController3,
-                    hintText: "UserID or Email",
-                    icon: Icons.person,
-                  ),
-                  StatusRow(
-                    status: _controllers.statusController3.text,
-                    onChanged: (bool? newValue) {
-                      setState(() {
-                        _controllers.statusController3.text =
-                            newValue != null && newValue ? 'true' : 'false';
-                      });
-                    },
-                  ),
-                  SizedBox(height: 25.0),
-                  ElevatedButton(
-                      onPressed: _updateUserStatus,
-                      child: Text("Approve User Account")),
-                  CustomTextFieldAdminApproval(
-                    controller: _controllers.userController4,
-                    hintText: "UserID or Email",
-                    icon: Icons.person,
-                  ),
-                  CustomTextFieldAdminApproval(
-                    controller: _controllers.refEmailController4,
-                    hintText: "Reference Email",
-                    icon: Icons.email,
-                  ),
-                  StatusRow(
-                    status: _controllers.statusController4.text,
-                    onChanged: (bool? newValue) {
-                      setState(() {
-                        _controllers.statusController4.text =
-                            newValue != null && newValue ? 'true' : 'false';
-                      });
-                    },
-                  ),
-                  SizedBox(height: 25.0),
-                  ElevatedButton(
-                      onPressed: _updateAdminStatus,
-                      child: Text("Approve Admin Account")),
-                ],
-              ),
-            ),
+          backgroundColor: Colors.grey[200],
+          body: LayoutBuilder(
+            builder: (context, constraints) {
+              if (constraints.maxWidth < 600) {
+                // Layout for mobile
+                return buildMobileLayout();
+              } else if (constraints.maxWidth < 1200) {
+                // Layout for tablet
+                return buildTabletLayout();
+              } else {
+                // Layout for desktop
+                return buildDesktopLayout();
+              }
+            },
           ),
         ));
+  }
+
+  Widget buildMobileLayout() {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            AdminPageContainer(
+              userEmail: _email,
+              userID: _adminId,
+              onLogout: _logout,
+              remainingTime: _remainingTime,
+            ),
+            const SizedBox(height: 10),
+            buildContent(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildTabletLayout() {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            AdminPageContainer(
+              userEmail: _email,
+              userID: _adminId,
+              onLogout: _logout,
+              remainingTime: _remainingTime,
+            ),
+            const SizedBox(height: 14),
+            buildContent(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildDesktopLayout() {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            AdminPageContainer(
+              userEmail: _email,
+              userID: _adminId,
+              onLogout: _logout,
+              remainingTime: _remainingTime,
+            ),
+            const SizedBox(height: 20),
+            buildContent(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildContent() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Card(
+                      child: Column(
+                        children: <Widget>[
+                          Text("Insert Your Data one or more to search"),
+                          SizedBox(
+                            height: 16,
+                          ),
+                          CustomTextFieldInput(
+                            controller: _controllers.dateController,
+                            hintText: "Register Date",
+                            icon: Icons.calendar_month,
+                          ),
+                          SizedBox(height: 10.0),
+                          CustomTextFieldInput(
+                            controller: _controllers.timeController,
+                            hintText: "Register Time",
+                            icon: Icons.watch_later_outlined,
+                          ),
+                          SizedBox(height: 10.0),
+                          CustomTextFieldInput(
+                            controller: _controllers.userIdController,
+                            hintText: "User ID",
+                            icon: Icons.person,
+                          ),
+                          SizedBox(height: 10.0),
+                          CustomTextFieldInput(
+                            controller: _controllers.firstnameController,
+                            hintText: "First Name",
+                            icon: Icons.person,
+                          ),
+                          SizedBox(height: 10.0),
+                          CustomTextFieldInput(
+                            controller: _controllers.lastnameController,
+                            hintText: "Last Name",
+                            icon: Icons.person,
+                          ),
+                          SizedBox(height: 10.0),
+                          CustomTextFieldInput(
+                            controller: _controllers.companyController,
+                            hintText: "Company",
+                            icon: Icons.maps_home_work_outlined,
+                          ),
+                          SizedBox(height: 10.0),
+                          CustomTextFieldInput(
+                            controller: _controllers.addressController,
+                            hintText: "Address",
+                            icon: Icons.home,
+                          ),
+                          SizedBox(height: 10.0),
+                          CustomTextFieldInput(
+                            controller: _controllers.cityController,
+                            hintText: "City",
+                            icon: Icons.maps_home_work_outlined,
+                          ),
+                          SizedBox(height: 10.0),
+                          CustomTextFieldInput(
+                            controller: _controllers.stateController,
+                            hintText: "State",
+                            icon: Icons.maps_home_work_outlined,
+                          ),
+                          SizedBox(height: 10.0),
+                          CustomTextFieldInput(
+                            controller: _controllers.countryController,
+                            hintText: "Country",
+                            icon: Icons.maps_home_work_outlined,
+                          ),
+                          SizedBox(height: 10.0),
+                          CustomTextFieldInput(
+                            controller: _controllers.postalCodeController,
+                            hintText: "Postal Code",
+                            icon: Icons.numbers,
+                          ),
+                          SizedBox(height: 10.0),
+                          CustomTextFieldInput(
+                            controller: _controllers.phoneController,
+                            hintText: "Phone",
+                            icon: Icons.phone,
+                          ),
+                          SizedBox(height: 10.0),
+                          CustomTextFieldInput(
+                            controller: _controllers.emailController,
+                            hintText: "Email",
+                            icon: Icons.email,
+                          ),
+                          SizedBox(height: 10.0),
+                          CustomTextFieldInput(
+                            controller: _controllers.dateInfoUpdateController,
+                            hintText: "The Lastest Update",
+                            icon: Icons.calendar_month,
+                          ),
+                          SizedBox(height: 10.0),
+                          CustomTextFieldInput(
+                            controller: _controllers.timeInfoUpdateController,
+                            hintText: "The Lastest Update",
+                            icon: Icons.watch_later_outlined,
+                          ),
+                          SizedBox(height: 22.0),
+                          StatusRow(
+                            status: _status,
+                            onChanged: (bool? newValue) {
+                              setState(() {
+                                _status = newValue != null && newValue
+                                    ? 'true'
+                                    : 'false';
+                              });
+                            },
+                          ),
+                          SizedBox(height: 25.0),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              ElevatedButton(
+                                onPressed: _fetchUserData,
+                                child: Text('Fetch User Data'),
+                                style: ElevatedButton.styleFrom(
+                                      foregroundColor: Colors.deepPurple[900],
+                                      backgroundColor: Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                ),
+                              ),
+                              SizedBox(width: 16.0),
+                              ElevatedButton(
+                                onPressed: _fetchAdminData,
+                                child: Text('Fetch Admin Data'),
+                                style: ElevatedButton.styleFrom(
+                                      foregroundColor: Colors.deepPurple[900],
+                                      backgroundColor: Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 25,
+                          )
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      width: 30,
+                    ),
+                    Card(
+                      child: Column(
+                        children: <Widget>[
+                          SizedBox(height: 16.0),
+                          Text("Edit data in Box below"),
+                          SizedBox(height: 16.0),
+                          CustomTextFieldOutput(
+                            controller: _controllers.dateController2,
+                            enable: false,
+                            hintText: "Date",
+                            icon: Icons.calendar_month_sharp,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          CustomTextFieldOutput(
+                            controller: _controllers.timeController2,
+                            enable: false,
+                            hintText: "Time",
+                            icon: Icons.watch_later_outlined,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          CustomTextFieldOutput(
+                            controller: _controllers.userIdController2,
+                            enable: false,
+                            hintText: "User ID",
+                            icon: Icons.person,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          CustomTextFieldOutput(
+                            controller: _controllers.firstnameController2,
+                            enable: true,
+                            hintText: "First Name",
+                            icon: Icons.person,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          CustomTextFieldOutput(
+                            controller: _controllers.lastnameController2,
+                            enable: true,
+                            hintText: "Last Name",
+                            icon: Icons.person,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          CustomTextFieldOutput(
+                            controller: _controllers.companyController2,
+                            enable: true,
+                            hintText: "Company",
+                            icon: Icons.maps_home_work_outlined,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          CustomTextFieldOutput(
+                            controller: _controllers.addressController2,
+                            enable: true,
+                            hintText: "Address",
+                            icon: Icons.maps_home_work_outlined,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          CustomTextFieldOutput(
+                            controller: _controllers.cityController2,
+                            enable: true,
+                            hintText: "City",
+                            icon: Icons.maps_home_work_outlined,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          CustomTextFieldOutput(
+                            controller: _controllers.stateController2,
+                            enable: true,
+                            hintText: "State",
+                            icon: Icons.maps_home_work_outlined,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          CustomTextFieldOutput(
+                            controller: _controllers.countryController2,
+                            enable: true,
+                            hintText: "Country",
+                            icon: Icons.maps_home_work_outlined,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          CustomTextFieldOutput(
+                            controller: _controllers.postalCodeController2,
+                            enable: true,
+                            hintText: "Postal Code",
+                            icon: Icons.numbers,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          CustomTextFieldOutput(
+                            controller: _controllers.phoneController2,
+                            enable: true,
+                            hintText: "Phone",
+                            icon: Icons.phone,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          CustomTextFieldOutput(
+                            controller: _controllers.emailController2,
+                            enable: true,
+                            hintText: "Email",
+                            icon: Icons.email,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          CustomTextFieldOutput(
+                            controller: _controllers.statusController2,
+                            enable: false,
+                            hintText: "Status",
+                            icon: Icons.check_rounded,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          CustomTextFieldOutput(
+                            controller: _controllers.dateInfoUpdateController2,
+                            enable: false,
+                            hintText: "Latest Date Info Update",
+                            icon: Icons.calendar_month,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          CustomTextFieldOutput(
+                            controller: _controllers.timeInfoUpdateController2,
+                            enable: false,
+                            hintText: "Latest Time Info Update",
+                            icon: Icons.watch_later_outlined,
+                          ),
+                          SizedBox(
+                            height: 16,
+                          ),
+                          Row(
+                            children: <Widget>[
+                              ElevatedButton(
+                                  onPressed: _updateUser,
+                                  child: Text("Update User Account"),
+                                  style: ElevatedButton.styleFrom(
+                                      foregroundColor: Colors.deepPurple[900],
+                                      backgroundColor: Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                  ),
+                                  ),
+                              SizedBox(
+                                width: 16.0,
+                              ),
+                              ElevatedButton(
+                                  onPressed: _deleteUser,
+                                  child: Text("Delete User Account"),
+                                  style: ElevatedButton.styleFrom(
+                                      foregroundColor: Colors.deepPurple[900],
+                                      backgroundColor: Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                  ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 25.0),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Card(
+                      child: Center(
+                        child: Column(
+                          children: [
+                            SizedBox(height: 16.0),
+                          Text("Admin Infomation(If have)"),
+                          SizedBox(height: 16.0),
+                          
+                            CustomTextFieldAdmin(
+                              controller: _controllers.adminIdController5,
+                              enable: false,
+                              hintText: "Admin ID",
+                              icon: Icons.person,
+                            ),
+                            SizedBox(height: 10.0),
+                            CustomTextFieldAdmin(
+                              controller: _controllers.userIdController5,
+                              enable: false,
+                              hintText: "User ID",
+                              icon: Icons.person,
+                            ),
+                            SizedBox(height: 10.0),
+                            CustomTextFieldAdmin(
+                              controller: _controllers.emailController5,
+                              enable: false,
+                              hintText: "Admin Email",
+                              icon: Icons.email,
+                            ),
+                            SizedBox(height: 10.0),
+                            CustomTextFieldAdmin(
+                              controller: _controllers.statusController5,
+                              enable: false,
+                              hintText: "Admin Status",
+                              icon: Icons.check_rounded,
+                            ),
+                            SizedBox(height: 10.0),
+                            CustomTextFieldAdmin(
+                              controller: _controllers.registerDateController5,
+                              enable: false,
+                              hintText: "Admin Registered Date",
+                              icon: Icons.calendar_month,
+                            ),
+                            SizedBox(height: 10.0),
+                            CustomTextFieldAdmin(
+                              controller: _controllers.registerTimeController5,
+                              enable: false,
+                              hintText: "Admin Registered Time",
+                              icon: Icons.watch_later_outlined,
+                            ),
+                            SizedBox(height: 10.0),
+                            CustomTextFieldAdmin(
+                              controller:
+                                  _controllers.referenceEmailController5,
+                              enable: false,
+                              hintText: "Reference Email Approval",
+                              icon: Icons.email,
+                            ),
+                            SizedBox(height: 25.0),
+                            
+                            ElevatedButton(
+                                onPressed: _deleteAdmin,
+                                child: Text("Delete Admin Account"),
+                                style: ElevatedButton.styleFrom(
+                                      foregroundColor: Colors.deepPurple[900],
+                                      backgroundColor: Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+
+                                ),
+                            ),
+                            SizedBox(height: 25.0),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -37,12 +37,27 @@ class UserDataContainer extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text(
-                          'Welcome, ${userData!['firstname']} ${userData!['lastname']} ID: ${userData!['user_id']} Company: ${userData!['company']}',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 8.0, horizontal: 16.0),
+                          decoration: BoxDecoration(
+                            color: Colors.black, // สีพื้นหลังของปุ่ม
+                            borderRadius: BorderRadius.circular(8.0), // มุมโค้ง
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.purple,
+                                blurRadius: 10.0,
+                                offset: Offset(6, 6), // เงา
+                              ),
+                            ],
+                          ),
+                          child: Text(
+                            'Welcome, ${userData!['firstname']} ${userData!['lastname']} ID: ${userData!['user_id']} Company: ${userData!['company']}',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                         Row(
@@ -73,12 +88,15 @@ class UserDataContainer extends StatelessWidget {
                                     Navigator.pushNamed(context, '/export');
                                     break;
                                   case 'Admin Mode':
-                                    Navigator.pushNamed(context, '/admin_login');
+                                    Navigator.pushNamed(
+                                        context, '/admin_login');
                                     break;
                                 }
                               },
                             ),
-                            SizedBox(width: 17,),
+                            SizedBox(
+                              width: 17,
+                            ),
                             //About nav bar
                             CustomPopupMenuButton(
                               title: 'About',
@@ -99,27 +117,56 @@ class UserDataContainer extends StatelessWidget {
                               onSelected: (value) {
                                 switch (value) {
                                   case 'Profile':
-                                    Navigator.pushNamed(context, '/profile');
+                                    //Navigator.pushNamed(context, '/profile');
                                     break;
                                   case 'Login':
-                                    Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+                                    Navigator.pushNamedAndRemoveUntil(
+                                        context, '/login', (route) => false);
                                     _logout(context);
                                     break;
                                   case 'Register':
-                                    Navigator.pushNamedAndRemoveUntil(context, '/register', (route) => false);
+                                    Navigator.pushNamedAndRemoveUntil(
+                                        context, '/register', (route) => false);
                                     _logout(context);
                                     break;
                                 }
                               },
                             ),
-                            SizedBox(width: 8,),
+                            SizedBox(
+                              width: 17,
+                            ),
                             //Contact nav bar
-                            TextButton(
-                              onPressed: () {},
-                              child: const Text(
-                                'Contact',
-                                style: TextStyle(color: Colors.white),
-                              ),
+                            CustomPopupMenuButton(
+                              title: 'Contact',
+                              menuItems: [
+                                PopupMenuItem<String>(
+                                  value: 'Company Profile',
+                                  child: Text('Company Profile'),
+                                ),
+                                PopupMenuItem<String>(
+                                  value: 'Social Media',
+                                  child: Text('Social Media'),
+                                ),
+                                PopupMenuItem<String>(
+                                  value: 'Email',
+                                  child: Text('Email'),
+                                ),
+                              ],
+                              onSelected: (value) {
+                                switch (value) {
+                                  case 'Company Profile':
+                                    //Navigator.pushNamed(context, '/profile');
+                                    break;
+                                  case 'Social Media':
+                                    //Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+                                    _logout(context);
+                                    break;
+                                  case 'Email':
+                                    //Navigator.pushNamedAndRemoveUntil(context, '/register', (route) => false);
+                                    _logout(context);
+                                    break;
+                                }
+                              },
                             ),
                           ],
                         ),
@@ -150,4 +197,3 @@ class UserDataContainer extends StatelessWidget {
     );
   }
 }
-

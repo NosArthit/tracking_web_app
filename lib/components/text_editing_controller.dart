@@ -39,11 +39,11 @@ class TextEditingControllers {
   final TextEditingController timeInfoUpdateController2 =
       TextEditingController();
 
-  // For the third set of controllers
+  // For the third set of controllers user
   final TextEditingController userController3 = TextEditingController();
   final TextEditingController statusController3 = TextEditingController();
 
-  // For the forth set of controllers
+  // For the forth set of controllers admin
   final TextEditingController userController4 = TextEditingController();
   final TextEditingController statusController4 = TextEditingController();
   final TextEditingController refEmailController4 = TextEditingController();

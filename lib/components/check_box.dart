@@ -13,13 +13,26 @@ class StatusRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Text('Status:'),
+        Text(
+          'Status:',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: Colors.deepPurple[900],
+          ),
+        ),
+        SizedBox(width: 10),
         Checkbox(
           value: status == 'true',
           onChanged: onChanged,
+          activeColor: Colors.deepPurple,
+          checkColor: Colors.white,
+          side: BorderSide(color: Colors.black),
         ),
       ],
     );
   }
 }
+

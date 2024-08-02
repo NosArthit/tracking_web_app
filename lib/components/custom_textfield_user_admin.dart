@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CustomTextFieldAdminApproval extends StatelessWidget {
+class CustomTextFieldUserAdmin extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
   final IconData icon;
@@ -9,14 +9,14 @@ class CustomTextFieldAdminApproval extends StatelessWidget {
   final Color hintTextColor;
   final Color iconColor;
 
-  CustomTextFieldAdminApproval({
+  CustomTextFieldUserAdmin({
     required this.controller,
     required this.hintText,
     required this.icon,
-    this.fillColor = Colors.amberAccent,
-    this.borderColor = Colors.deepOrange,
-    this.hintTextColor = Colors.black54,
-    this.iconColor = Colors.black54,
+    this.fillColor = const Color(0xFFFFFFFF),
+    this.borderColor = const Color(0xFF311B92),
+    this.hintTextColor = const Color(0xFF311B92),
+    this.iconColor = const Color(0xFF311B92),
   });
 
   @override
@@ -35,7 +35,7 @@ class CustomTextFieldAdminApproval extends StatelessWidget {
           fillColor: fillColor,
           border: OutlineInputBorder(
             borderSide: BorderSide(color: borderColor, width: 4),
-            borderRadius: BorderRadius.circular(24),
+            borderRadius: BorderRadius.circular(10),
           ),
         ),
       ),

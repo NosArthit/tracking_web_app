@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 
 class TrackingApiService {
-  static const String _baseUrl = 'http://localhost:3000/api/tracking';
+  static const String _baseUrl = 'http://34.142.234.100:3000/api/tracking';
 
   Future<http.Response> fetchLatestData(String imei) {
     return http.get(Uri.parse('$_baseUrl/latest_data?imei=$imei'));

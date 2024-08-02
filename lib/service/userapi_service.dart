@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserApiService {
-  static const String _baseUrl = 'http://localhost:3000/api/users';
+  static const String _baseUrl = 'http://34.142.234.100:3000/api/users';
 
   Future<String?> register(Map<String, String> userData) async {
     final url = Uri.parse('$_baseUrl/register');

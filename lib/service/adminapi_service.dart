@@ -4,11 +4,11 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AdminApiService {
-  static const String _baseUrl = 'http://localhost:3000/api/admin';
-  final String baseUrl = 'http://localhost:3000/api/admin/user';
+  static const String baseUrl = 'http://34.142.234.100:3000/api/admin';
+  //final String baseUrl = 'http://34.142.234.100:3000/api/admin/user';
 
   Future<String?> register(String email) async {
-    final url = Uri.parse('$_baseUrl/register');
+    final url = Uri.parse('$baseUrl/register');
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
@@ -18,14 +18,14 @@ class AdminApiService {
     if (response.statusCode == 201) {
       return 'Admin registered successfully';
     } else {
-      final body = jsonDecode(response.body);
-      return Future.error(body['message']);
+      //final body = jsonDecode(response.body);
+      return 'Admin register failed';
     }
   }
 
   Future<String?> login(String email, String password, String adminId) async {
     final response = await http.post(
-      Uri.parse('$_baseUrl/login'),
+      Uri.parse('$baseUrl/login'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -60,7 +60,7 @@ class AdminApiService {
 
   static Future<void> logout({required String token}) async {
     final prefs = await SharedPreferences.getInstance();
-    final url = Uri.parse('$_baseUrl/logout');
+    final url = Uri.parse('$baseUrl/logout');
     final response = await http.delete(
       url,
       headers: {
@@ -88,7 +88,7 @@ Future<void> deleteUser({
       throw Exception('Either userId or email must be provided');
     }
 
-    final url = Uri.parse('$_baseUrl/admin/delete').replace(queryParameters: {
+    final url = Uri.parse('$baseUrl/admin/delete').replace(queryParameters: {
       if (userId != null) 'user_id': userId,
       if (email != null) 'email': email,
     });
@@ -120,7 +120,7 @@ Future<void> deleteUser({
       throw Exception('Either userId or email must be provided');
     }
 
-    final url = Uri.parse('$baseUrl/delete').replace(queryParameters: {
+    final url = Uri.parse('$baseUrl/user/delete').replace(queryParameters: {
       if (userId != null) 'user_id': userId,
       if (email != null) 'email': email,
     });
@@ -150,7 +150,7 @@ Future<void> deleteUser({
       String? email,
       required String status,
       required String token}) async {
-    final url = Uri.parse('$baseUrl/status').replace(queryParameters: {
+    final url = Uri.parse('$baseUrl/user/status').replace(queryParameters: {
       if (userId != null) 'user_id': userId,
       if (email != null) 'email': email,
     });
@@ -178,7 +178,7 @@ Future<void> deleteUser({
       required String status,
       required String refEmail,
       required String token}) async {
-    final url = Uri.parse('$_baseUrl/admin/status').replace(queryParameters: {
+    final url = Uri.parse('$baseUrl/admin/status').replace(queryParameters: {
       if (userId != null) 'user_id': userId,
       if (email != null) 'email': email,
     });
@@ -219,7 +219,7 @@ Future<void> deleteUser({
     String timeInfoUpdate = '',
     required String token,
   }) async {
-    final url = Uri.parse('$baseUrl/fetch').replace(queryParameters: {
+    final url = Uri.parse('$baseUrl/user/fetch').replace(queryParameters: {
       'date': date,
       'time': time,
       'user_id': userId,
@@ -280,7 +280,7 @@ Future<void> deleteUser({
     String timeInfoUpdate = '',
     required String token,
   }) async {
-    final url = Uri.parse('$_baseUrl/admin/fetch').replace(queryParameters: {
+    final url = Uri.parse('$baseUrl/admin/fetch').replace(queryParameters: {
       'date': date,
       'time': time,
       'user_id': userId,
@@ -337,7 +337,7 @@ Future<void> deleteUser({
     required String email,
     required String token,
   }) async {
-    final url = Uri.parse('$baseUrl/update').replace(queryParameters: {
+    final url = Uri.parse('$baseUrl/user/update').replace(queryParameters: {
       'user_id': userId,
     });
 
@@ -395,7 +395,7 @@ Future<void> deleteUser({
       if (email != null) 'email': email,
     };
 
-    final uri = Uri.parse('$_baseUrl/user/details')
+    final uri = Uri.parse('$baseUrl/user/details')
         .replace(queryParameters: queryParameters);
 
     final response = await http.get(
